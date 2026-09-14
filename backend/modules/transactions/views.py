@@ -7,6 +7,7 @@ from .serializers import TransactionSerializer
 from modules.budgets.models import Budget
 from modules.notifications.utils import create_notification
 from modules.analytics.ai_service import parse_financial_text
+from .statement_parser import parse_statement_file
 from django.db.models import Sum
 from decimal import Decimal
 from django.utils import timezone
@@ -88,30 +89,11 @@ class TransactionViewSet(viewsets.ModelViewSet):
         if not file:
             return Response({"error": "No file uploaded"}, status=400)
 
-        raw_text = ""
-        filename = file.name.lower()
+        transactions, error = parse_statement_file(file, file.name, password=password)
+        if error:
+            return Response({"error": error}, status=400)
 
-        try:
-            if filename.endswith('.pdf'):
-                with pdfplumber.open(file, password=password) as pdf:
-                    for page in pdf.pages:
-                        raw_text += page.extract_text() or ""
-            elif filename.endswith(('.csv', '.xlsx', '.xls')):
-                df = pd.read_csv(file) if filename.endswith('.csv') else pd.read_excel(file)
-                raw_text = df.to_string()
-            else:
-                return Response({"error": "Unsupported file format"}, status=400)
-
-            if not raw_text.strip():
-                return Response({"error": "Could not extract text from file"}, status=400)
-
-            # Use Gemini to summarize/structure the raw text blob
-            parsed_data = parse_financial_text(raw_text[:10000]) # Limit to 10k chars for safety
-            return Response({"transactions": parsed_data})
-
-        except Exception as e:
-            print(f"DEBUG: Statement parsing failed: {e}")
-            return Response({"error": f"Parsing failed: {str(e)}"}, status=400)
+        return Response({"transactions": transactions or []})
 
     @action(detail=False, methods=['POST'])
     def bulk_create(self, request):
