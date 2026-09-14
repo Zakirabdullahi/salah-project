@@ -56,7 +56,12 @@ const fetchTrends = async () => (await api.get("analytics/trends/")).data;
 const fetchNotifications = async () => (await api.get("notifications/")).data;
 
 const formatKSh = (val: any) =>
-  val != null ? `KSh ${Number(val).toLocaleString()}` : "KSh 0";
+  val != null
+    ? `KSh ${Number(val).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      })}`
+    : "KSh 0";
 
 const Dashboard = () => {
   const { data: kpis } = useQuery({ queryKey: ["kpis"], queryFn: fetchKPIs });

@@ -74,7 +74,13 @@ const Budgets = () => {
     });
   };
 
-  const formatKSh = (val: any) => `KSh ${Number(val).toLocaleString()}`;
+  const formatKSh = (val: any) =>
+    val != null
+      ? `KSh ${Number(val).toLocaleString("en-US", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}`
+      : "KSh 0";
 
   const getSpendForCategory = (cat: string) => {
     if (!transactions) return 0;

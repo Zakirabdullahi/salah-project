@@ -256,12 +256,48 @@ from decimal import Decimal
 from datetime import timedelta
 
 def get_financial_score_breakdown(metrics):
-    wealth_ratio = float(metrics.get('wealth_ratio', 0))
-    savings_ratio = float(metrics.get('savings_ratio', 0))
-    budget_discipline = float(metrics.get('budget_discipline', 0))
+    """
+    Computes financial health score starting from 100 for a new user,
+    reducing accordingly based on deficits, budget overruns, and savings neglect.
+    """
+    income = float(metrics.get('income', 0))
+    expenses = float(metrics.get('expenses', 0))
+    total_budget = float(metrics.get('total_budget', 0))
+    over_budget_total = float(metrics.get('over_budget_total', 0))
+    total_target = float(metrics.get('total_target', 0))
+    total_current = float(metrics.get('total_current', 0))
     
-    score = (wealth_ratio * 40) + (savings_ratio * 30) + (budget_discipline * 30)
-    return round(min(max(score, 0), 100), 1)
+    # New user with no expenses & no income starts at 100.0
+    if expenses == 0 and income == 0:
+        return 100.0
+        
+    score = 100.0
+    deductions = 0.0
+    
+    # 1. Deficit & Burn Rate (up to 40 points deduction)
+    if income > 0:
+        if expenses > income:
+            deficit_pct = (expenses - income) / income
+            deductions += min(40.0, deficit_pct * 40.0)
+        else:
+            burn_rate = expenses / income
+            if burn_rate > 0.70:
+                deductions += min(20.0, (burn_rate - 0.70) * 60.0)
+    elif expenses > 0:
+        deductions += 20.0  # Spending with 0 recorded income
+        
+    # 2. Budget Discipline (up to 35 points deduction)
+    if total_budget > 0 and over_budget_total > 0:
+        over_ratio = over_budget_total / total_budget
+        deductions += min(35.0, over_ratio * 35.0)
+        
+    # 3. Savings Goal Progress (up to 15 points deduction, only if active targets exist)
+    if total_target > 0:
+        savings_ratio = total_current / total_target
+        if savings_ratio < 0.50:
+            deductions += (0.50 - savings_ratio) * 30.0
+            
+    return round(max(10.0, min(100.0, score - deductions)), 1)
 
 def forecast_expenses(daily_avg, days=30):
     return round(float(daily_avg * days), 2)

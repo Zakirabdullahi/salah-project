@@ -171,25 +171,31 @@ class FinancialHealthScoreView(APIView):
 
     def get(self, request):
         user = request.user
-        income = Transaction.objects.filter(user=user, type='INCOME').aggregate(Sum('amount'))['amount__sum'] or Decimal('1') 
+        income = Transaction.objects.filter(user=user, type='INCOME').aggregate(Sum('amount'))['amount__sum'] or Decimal('0') 
         expenses = Transaction.objects.filter(user=user, type='EXPENSE').aggregate(Sum('amount'))['amount__sum'] or Decimal('0')
         wealth_ratio = (income - expenses) / income if income > 0 else 0
         
-        total_target = SavingGoal.objects.filter(user=user).aggregate(Sum('target_amount'))['target_amount__sum'] or Decimal('1')
+        total_target = SavingGoal.objects.filter(user=user).aggregate(Sum('target_amount'))['target_amount__sum'] or Decimal('0')
         total_current = SavingGoal.objects.filter(user=user).aggregate(Sum('current_amount'))['current_amount__sum'] or Decimal('0')
-        savings_ratio = total_current / total_target
+        savings_ratio = total_current / total_target if total_target > 0 else 0
         
         budgets = Budget.objects.filter(user=user)
-        total_budget = budgets.aggregate(Sum('limit'))['limit__sum'] or Decimal('1')
+        total_budget = budgets.aggregate(Sum('limit'))['limit__sum'] or Decimal('0')
         over_budget_total = Decimal('0')
         for b in budgets:
             category_spend = Transaction.objects.filter(user=user, category=b.category, type='EXPENSE').aggregate(Sum('amount'))['amount__sum'] or Decimal('0')
             if category_spend > b.limit:
                 over_budget_total += (category_spend - b.limit)
         
-        budget_discipline = 1 - (over_budget_total / total_budget)
+        budget_discipline = (1 - (over_budget_total / total_budget)) if total_budget > 0 else 1.0
         
         metrics = {
+            "income": float(income),
+            "expenses": float(expenses),
+            "total_budget": float(total_budget),
+            "over_budget_total": float(over_budget_total),
+            "total_target": float(total_target),
+            "total_current": float(total_current),
             "wealth_ratio": float(wealth_ratio),
             "savings_ratio": float(savings_ratio),
             "budget_discipline": float(budget_discipline)
