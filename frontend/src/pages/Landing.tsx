@@ -264,7 +264,7 @@ const Landing = () => {
                   mb: 4,
                 }}
               >
-                FinGPS started with a simple question: Why is it so hard for
+                salah's Project started with a simple question: Why is it so hard for
                 students to manage money? We built this platform to integrate
                 AI-driven intelligence into your daily spending habits.
               </Typography>

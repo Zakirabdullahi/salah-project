@@ -53,7 +53,7 @@ const Register = () => {
           }}
         >
           <Typography variant="h3" fontWeight="900" mb={3}>
-            Join FinGPS
+            Join salah's Project
           </Typography>
           <Typography
             variant="h6"

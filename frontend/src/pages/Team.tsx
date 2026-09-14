@@ -50,7 +50,7 @@ const Team = () => {
             INNOVATORS
           </Typography>
           <Typography variant="h2" sx={{ fontWeight: 900, mb: 3 }}>
-            The Minds Behind FinGPS
+            The Minds Behind salah's Project
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9 }}>
             A diverse team committed to revolutionizing how students manage

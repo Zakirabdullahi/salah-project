@@ -28,7 +28,7 @@ const Footer = () => {
               variant="h5"
               sx={{ fontWeight: 900, mb: 2, color: "white" }}
             >
-              FinGPS.
+              salah's Project.
             </Typography>
             <Typography
               sx={{
@@ -139,7 +139,7 @@ const Footer = () => {
           }}
         >
           <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.5)" }}>
-            © 2026 FinGPS.Built with &hearts; by John Kimani. All rights reserved.
+            © 2026 salah's Project. All rights reserved.
           </Typography>
           <Typography
             variant="body2"

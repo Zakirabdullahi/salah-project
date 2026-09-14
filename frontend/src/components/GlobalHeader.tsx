@@ -107,7 +107,7 @@ const GlobalHeader = ({ onMenuClick }: { onMenuClick?: () => void }) => {
           variant="h5"
           sx={{ fontWeight: 900, color: "var(--color-primary)" }}
         >
-          FinGPS.
+          salah's Project.
         </Typography>
         <IconButton onClick={() => setMobileMenuOpen(false)}>
           <CloseIcon />
@@ -199,7 +199,7 @@ const GlobalHeader = ({ onMenuClick }: { onMenuClick?: () => void }) => {
             }}
             onClick={() => navigate("/")}
           >
-            FinGPS.
+            salah's Project.
           </Typography>
         </Box>
 
@@ -298,7 +298,7 @@ const GlobalHeader = ({ onMenuClick }: { onMenuClick?: () => void }) => {
             color: "var(--color-primary)",
           }}
         >
-          FinGPS.
+          salah's Project.
         </Typography>
       </Box>
 

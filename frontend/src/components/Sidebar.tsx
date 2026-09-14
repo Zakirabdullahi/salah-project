@@ -51,7 +51,7 @@ const Sidebar = ({ onNavClick }: { onNavClick?: () => void }) => {
           fontWeight="900"
           sx={{ color: "#1a1a1a", letterSpacing: "-0.5px" }}
         >
-          FinGPS.
+          salah's Project.
         </Typography>
       </Box>
       <List sx={{ flexGrow: 1, px: 2, pt: 2 }}>

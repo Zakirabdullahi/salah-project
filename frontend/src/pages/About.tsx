@@ -51,7 +51,7 @@ const About = () => {
               fontSize: { xs: "2.5rem", md: "4rem" },
             }}
           >
-            Empowering the FinGPS of Financial Freedom
+            Empowering Your Journey to Financial Freedom
           </Typography>
           <Typography
             variant="h5"
@@ -83,7 +83,7 @@ const About = () => {
                   color: "var(--color-text-primary)",
                 }}
               >
-                Why FinGPS?
+                Why salah's Project?
               </Typography>
               <Typography
                 sx={{
@@ -94,7 +94,7 @@ const About = () => {
               >
                 Managing finances as a student is often overwhelming. Between
                 tuition, rent, and daily expenses, it's easy to lose track.
-                FinGPS was built as a "Master Project" to solve this problem
+                salah's Project was built to solve this problem
                 using cutting-edge AI and data-driven insights.
               </Typography>
             </Box>

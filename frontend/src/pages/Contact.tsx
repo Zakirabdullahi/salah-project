@@ -55,7 +55,7 @@ const Contact = () => {
             We're Here to Help
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9 }}>
-            Have questions about FinGPS? Reach out to our team.
+            Have questions about salah's Project? Reach out to our team.
           </Typography>
         </Container>
       </Box>
@@ -209,18 +209,18 @@ const Contact = () => {
             {[
               {
                 q: "Is my financial data secure?",
-                a: "Absolutely. FinGPS uses industry-standard encryption and we never store your bank credentials. Your privacy is our top priority.",
+                a: "Absolutely. salah's Project uses industry-standard encryption and we never store your bank credentials. Your privacy is our top priority.",
               },
               {
                 q: "How does the AI Advisor help me?",
                 a: "Our AI analyzes your spending habits and provides personalized tips on how to save more, avoid over-budgeting, and reach your goals faster.",
               },
               {
-                q: "Can I use FinGPS across multiple devices?",
+                q: "Can I use salah's Project across multiple devices?",
                 a: "Yes! Your account syncs perfectly across your phone, tablet, and laptop so you always have your finances at your fingertips.",
               },
               {
-                q: "Is there a cost for using FinGPS?",
+                q: "Is there a cost for using salah's Project?",
                 a: "The basic version for students is completely free. We are committed to helping university students master their finances.",
               },
               {
